@@ -1,0 +1,39 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title>Trade Logger</title>
+    <link rel="icon" type="image/png" href="~/tradelogger_logo.ico" />
+    <link rel="stylesheet" href="Content/site.css" />
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css" />
+    <script src="js/jquery.min.js"></script>
+    <webopt:BundleReference runat="server" Path="~/Content/css" /> 
+    <link href="~/tradelogger_logo.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+    <div class="topnav">
+        <img class="navbar-brand" style="width: 95px;display: inline;padding: 7px 0px 0px 0px;margin: 0px -15px 0px -20px;" src="tradelogger_logo.ico" />
+    </div>
+
+    
+<div class="sidebar">
+  <a href="TradeAnalyser.aspx">Trade Analysis</a>
+  <a href="TradeLog.aspx">Trade Log</a>
+</div>
+
+    <div class="content">
+        <section class="section main-section" style="height:600px">
+		    <div class="card mb-6" >
+			    <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+		    </div>
+	    </section>
+    </div>
+
+
+</body>
+</html>

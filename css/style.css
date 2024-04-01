@@ -1,0 +1,19 @@
+﻿.form4 {
+
+    border : solid 3px;
+    border-color : black;
+    height : auto;
+    width : 85%;
+    padding : 10px;
+    margin : 10px 10px 10px 0px;
+}
+
+
+.form4_col4 {
+    border : solid 1px;
+    border-color : black;
+    height : 10px;
+    width : 50px;
+    padding : 5px;
+    margin : 10px 10px 10px 5px;
+}
