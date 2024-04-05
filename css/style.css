@@ -1,19 +1,137 @@
-﻿.form4 {
-
-    border : solid 3px;
-    border-color : black;
-    height : auto;
-    width : 85%;
-    padding : 10px;
-    margin : 10px 10px 10px 0px;
+﻿/* Form4 Starts */
+.form4
+{
+    width:95%; 
+    float:left; 
+    padding:1.5% !important; 
+    background:#ffffff; 
+    border:1px solid #e6e4e5; 
+    border-radius:15px !important; 
+    margin:0 0 25px !important;
+}
+.form4_col
+{
+    width:23.5%;
+    float:left; 
+    padding:0px 1.5% 12px 0px !important; 
+    height:90px; 
+    background:none !important;
 }
 
-
-.form4_col4 {
-    border : solid 1px;
-    border-color : black;
-    height : 10px;
-    width : 50px;
-    padding : 5px;
-    margin : 10px 10px 10px 5px;
+.form5_col
+{
+    width:20%;
+    float:left;
+    padding:10px 1% 10px 0px !important;
 }
+
+.form4_col span
+{
+    width:90%; 
+    float:left; 
+    font-size:14px !important; 
+    padding:0px 0px 5px 0px; 
+    font-weight:bold;
+}
+.form4_col input
+{ 
+    width:93%; 
+    float:left; 
+    border:1px solid #c0c0c0 !important; 
+    height:25px !important; 
+    box-shadow:none !important; 
+    text-shadow:white;
+    border-radius:0px !important; 
+    font-size:13px !important; 
+    padding:4px 4px;
+    margin:2px 0px 0px 0px;
+}
+.form4_col textarea
+{ 
+    width:93%; 
+    float:left; 
+    border:1px solid #c0c0c0 !important; 
+    height:60px !important; 
+    box-shadow:none !important; 
+    text-shadow:white;
+    border-radius:0px !important; 
+    font-size:13px !important; 
+    padding:4px 4px;
+    margin:2px 0px 0px 0px;
+}
+.form4_col select
+{
+    width:97% !important; 
+    float:left; 
+    border:1px solid #c0c0c0 !important; 
+    min-height: 35px;
+    box-shadow:none !important; 
+    font-size:13px !important;
+    border-radius: 4px !important;
+}
+.form4_col label.error
+{
+    color:red; 
+    font-size:12px !important; 
+    font-weight:normal !important;
+}
+/* Form4 Ends */
+
+.star::after
+{
+    content: " * ";	
+    color:red; 
+    font-weight:bold;
+}
+.myCheckBoxList label 
+{
+    padding-right: 25px;
+}
+.errorMessage 
+{
+    color: red;
+}
+
+.formbtn {display: inline-block;font-weight: 600;text-align: center;white-space: nowrap;vertical-align: middle;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 14px !important;line-height: 1.5;border-radius: .25rem;transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
+
+.searchdiv{width: 23.5%;height: 60px;margin: 0px;float: left;padding: 10px 1.5% 12px 0px !important;}
+
+.searchbtn-common {background-color: #006276;position: relative;z-index: 1;color: #fff !important;text-decoration: none !important; }
+
+.resetbtn-common {background-color: #43464b;position: relative;z-index: 1;color: #fff !important;text-decoration: none !important;width: 100px !important;}
+	
+h1 {color: #737373;font-size: 22px;font-weight: normal;margin: 10px 0px 10px 5px;padding: 0px;float: left;} 
+
+.griddiv {width: 95%;float: left;padding: 1.5% !important;background: #ffffff;border: 1px solid #e6e4e5;border-radius: 15px !important;margin: 0px 0px 25px 0px !important;}
+
+.griddiv table{width:100% !important; background:#ffffff; text-align:center; font-size:13px !important; margin:0px; float:left;}
+
+.griddiv table,.griddiv table tr th,.griddiv table tr td {text-align: left !important; border: 0px solid #cbcbcb !important; border-collapse: collapse; font-family: 'Open Sans', sans-serif !important;}
+
+.griddiv table thead tr th, .griddiv table tr td{padding:8px; word-wrap:break-word;text-align: left !important;}
+
+.griddiv table thead tr th{background:#5f6970 !important; font-weight:bold !important;color:white !important;color: #fff !important;}
+
+.griddiv table thead tr:nth-child(even) th{background:#167f9e !important; font-weight:bold !important;}
+
+.griddiv table tr:nth-child(even) {background:#f1f1f1 !important;}
+
+.griddiv table tr th sapn{text-shadow:unset !important; font-size:13px !important; font-weight:bold !important;}
+
+.griddiv .ui-state-default{ font-size:13px !important;}
+
+.griddiv table a{color:#4f4f4f; text-decoration:underline; cursor:pointer;}
+
+.griddiv table a:hover{color:#4f4f4f; text-decoration:none;}
+
+.sno tr th:nth-child(1){ width:35px;}
+
+.griddiv .ui-datatable-scrollable{float:left; width:100%;}
+
+.griddiv table tr:last-child td table tr td:last-child{ width:98% !important; }
+
+.add-btn { display: inline-block;font-weight: 500;color: #fff !important;text-align: center;vertical-align: middle;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-color: #006276;border: 1px solid #006276;padding: .375rem .75rem;font-size: 14px;line-height: 1.5;border-radius: .25rem;float: right;min-width: 80px;text-decoration: none;transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;margin: 0px 0px 10px 0px; }
+
+.form4_check {width: 23%;border-radius: 0px !important;margin: 0 0 0px !important;border: 0px solid #e6e4e5;padding: 0% !important;height: 90px;float: left;}
+
+.form4_check span{width: 44%;float: left;font-size: 14px !important;padding: 0px 0px 0px 0px;font-weight: bold;}
