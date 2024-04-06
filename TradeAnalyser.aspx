@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
     <div class="container">
         <h1>Trade Analysis</h1>
+        <div>
+            <asp:Label runat="server" ID="lblErrorDisplay" ForeColor="Red" FontBold="true" Visible="false" Font-Size="Medium" ></asp:Label>
+        </div>
         <form runat="server">
                     <div id="Div1" class="form4" runat="server">
             <div id="Div2" class="form4_col" runat="server">
