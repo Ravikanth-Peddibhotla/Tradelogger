@@ -10,15 +10,20 @@
             <asp:Label runat="server" ID="lblErrorDisplay" ForeColor="Red" FontBold="true" Visible="false" Font-Size="Medium" ></asp:Label>
         </div>
         <form runat="server">
-                    <div id="Div1" class="form4" runat="server">
+          <div id="Div1" class="form4" runat="server">
             <div id="Div2" class="form4_col" runat="server">
                 <asp:Label ID="lblmodel" runat="server" >Stock/index</asp:Label>
-                <asp:DropDownList ID="ddlmodel" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" ></asp:DropDownList>
+                <asp:DropDownList ID="ddlmodel" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" OnSelectedIndexChanged="ddlSelectedModel" data-rel="chosen" ></asp:DropDownList>
             </div>
 
-            <div id="Div3" class="form4_col" runat="server">
+            <div id="divtxtstockname" class="form4_col" runat="server">
                 <asp:Label ID="lblstockname" runat="server">Stock Name</asp:Label>
                 <asp:TextBox ID="txtstockname" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" ></asp:TextBox>
+            </div>
+
+            <div id="divddlindex" class="form4_col" runat="server">
+                <asp:Label ID="lblindex" runat="server">Index Name</asp:Label>
+                <asp:DropDownList ID="ddlindex" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" ></asp:DropDownList>
             </div>
 
            <div id="Div4" class="form4_col" runat="server">
