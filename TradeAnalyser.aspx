@@ -11,22 +11,24 @@
         </div>
         <form runat="server">
           <div id="Div1" class="form4" runat="server">
-            <div id="Div2" class="form4_col" runat="server">
+            <div id="Div2" class="form4_col" runat="server" CssClass="star">
                 <asp:Label ID="lblmodel" runat="server" >Stock/index</asp:Label>
                 <asp:DropDownList ID="ddlmodel" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" OnSelectedIndexChanged="ddlSelectedModel" data-rel="chosen" ></asp:DropDownList>
+                <asp:RequiredFieldValidator ID="rfvmodel" CssClass="errorMessage" InitialValue="0" runat="server" ControlToValidate="ddlmodel" SetFocusOnError="true" Display="Dynamic" ErrorMessage="Select Trade"></asp:RequiredFieldValidator>
             </div>
 
-            <div id="divtxtstockname" class="form4_col" runat="server">
+            <div id="divtxtstockname" class="form4_col" runat="server" CssClass="star">
                 <asp:Label ID="lblstockname" runat="server">Stock Name</asp:Label>
                 <asp:TextBox ID="txtstockname" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" ></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvstockname" CssClass="errorMessage" runat="server" ControlToValidate="txtstockname" SetFocusOnError="true" Display="Dynamic" ErrorMessage="Enter Stock Name"></asp:RequiredFieldValidator>
             </div>
 
-            <div id="divddlindex" class="form4_col" runat="server">
+            <div id="divddlindex" class="form4_col" runat="server" CssClass="star">
                 <asp:Label ID="lblindex" runat="server">Index Name</asp:Label>
-                <asp:DropDownList ID="ddlindex" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" ></asp:DropDownList>
+                <asp:DropDownList ID="ddlindex" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True"></asp:DropDownList>
             </div>
 
-           <div id="Div4" class="form4_col" runat="server">
+           <div id="Div4" class="form4_col" runat="server" CssClass="star">
                 <asp:Label ID="lbltot" runat="server" >Type of Trading</asp:Label>
                 <asp:DropDownList ID="ddltot" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" >
                     <asp:ListItem runat="server" Value="0">--select--</asp:ListItem>
@@ -37,22 +39,22 @@
                 </asp:DropDownList>
             </div>
 
-            <div id="Div5" class="form4_col" runat="server">
+            <div id="Div5" class="form4_col" runat="server" CssClass="star">
                 <asp:Label ID="lbldirection" runat="server" >Direction</asp:Label>
                 <asp:DropDownList ID="ddldirection" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" OnSelectedIndexChanged="ddlSelectedsetup"></asp:DropDownList>
             </div>
 
             <div id="Div6" class="form4_col" runat="server">
                 <asp:Label ID="lblsetup" runat="server" >Setup</asp:Label>
-                <asp:DropDownList ID="ddlsetup" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" ></asp:DropDownList>
+                <asp:TextBox ID ="txtsetup" runat="server" autocomplete="off" />
             </div>
 
-            <div id="Div7" class="form4_col" runat="server">
+            <div id="Div7" class="form4_col" runat="server" CssClass="star">
                 <asp:Label ID="lbltradesetup" runat="server" >Trade Setup</asp:Label>
                 <asp:DropDownList ID="ddltradesetup" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" ></asp:DropDownList>
             </div>
 
-            <div id="Div8" class="form4_col" runat="server">
+            <div id="Div8" class="form4_col" runat="server" CssClass="star">
                 <asp:Label ID="lblweapon" runat="server" >Weapon Name</asp:Label>
                 <asp:DropDownList ID="ddlweapon" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" ></asp:DropDownList>
             </div>

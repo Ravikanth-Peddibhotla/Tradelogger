@@ -15,11 +15,20 @@ public partial class TradeAnalyser : System.Web.UI.Page
     {
         divtxtstockname.Visible = false;
         divddlindex.Visible = false;
+        txtsetup.ReadOnly = true;
         if (!IsPostBack)
         {
             getModelDetails();
+            int modelid = int.Parse(ddlmodel.SelectedValue);
+            if (modelid == 1)
+            {
+                Fieldshow();
+            }
+            else if (modelid == 2)
+            {
+                Fieldshow();
+            }
             getdirection();
-            //getsetup();
             ddlindex.Items.Clear();
             ddlindex.DataBind();
             ddlindex.Items.Insert(0, new ListItem("--Select--", "0"));
@@ -68,9 +77,7 @@ public partial class TradeAnalyser : System.Web.UI.Page
             }
             else
             {
-                ddlsetup.Items.Clear();
-                ddlsetup.DataBind();
-                ddlsetup.Items.Insert(0, new ListItem("--Select--", "0"));
+                //Error
             }
         }
         catch (Exception ex)
@@ -216,21 +223,14 @@ public partial class TradeAnalyser : System.Web.UI.Page
             SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dt);
+            SqlDataReader rdr = cmd.ExecuteReader();
+            if (rdr.HasRows)
+            {
+                rdr.Read();
+                string setup = rdr["setupname"].ToString();
+                txtsetup.Text = setup;
+            }
             conn.Close();
-            if (dt != null && dt.Rows.Count > 0)
-            {
-
-                ddlsetup.DataTextField = "setupname";
-                ddlsetup.DataValueField = "setupid";
-                ddlsetup.DataSource = dt;
-                ddlsetup.DataBind();
-                ddlsetup.Items.Insert(0, new ListItem("--Select--", "0"));
-            }
-            else
-            {
-                ddlsetup.DataBind();
-                ddlsetup.Items.Insert(0, new ListItem("--Select--", "0"));
-            }
         }
         catch (Exception ex)
         {
