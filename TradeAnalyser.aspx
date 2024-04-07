@@ -28,12 +28,18 @@
 
            <div id="Div4" class="form4_col" runat="server">
                 <asp:Label ID="lbltot" runat="server" >Type of Trading</asp:Label>
-                <asp:DropDownList ID="ddltot" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" ></asp:DropDownList>
+                <asp:DropDownList ID="ddltot" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" >
+                    <asp:ListItem runat="server" Value="0">--select--</asp:ListItem>
+                    <asp:ListItem runat="server" Value="1">Equity CNC</asp:ListItem>
+                    <asp:ListItem runat="server" Value="2">Equity Intraday</asp:ListItem>
+                    <asp:ListItem runat="server" Value="3">F&O CNC</asp:ListItem>
+                    <asp:ListItem runat="server" Value="4">F&O Intraday</asp:ListItem>
+                </asp:DropDownList>
             </div>
 
             <div id="Div5" class="form4_col" runat="server">
                 <asp:Label ID="lbldirection" runat="server" >Direction</asp:Label>
-                <asp:DropDownList ID="ddldirection" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" ></asp:DropDownList>
+                <asp:DropDownList ID="ddldirection" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" OnSelectedIndexChanged="ddlSelectedsetup"></asp:DropDownList>
             </div>
 
             <div id="Div6" class="form4_col" runat="server">

@@ -18,6 +18,8 @@ public partial class TradeAnalyser : System.Web.UI.Page
         if (!IsPostBack)
         {
             getModelDetails();
+            getdirection();
+            //getsetup();
             ddlindex.Items.Clear();
             ddlindex.DataBind();
             ddlindex.Items.Insert(0, new ListItem("--Select--", "0"));
@@ -54,6 +56,31 @@ public partial class TradeAnalyser : System.Web.UI.Page
             throw ex;
         }
     }
+
+    protected void ddlSelectedsetup(object sender, EventArgs e)
+    {
+        try
+        {
+            int directionid = int.Parse(ddldirection.SelectedValue);
+            if (directionid > 0)
+            {
+                getsetup();
+            }
+            else
+            {
+                ddlsetup.Items.Clear();
+                ddlsetup.DataBind();
+                ddlsetup.Items.Insert(0, new ListItem("--Select--", "0"));
+            }
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
+
+
 
 
     #endregion Event
@@ -113,7 +140,7 @@ public partial class TradeAnalyser : System.Web.UI.Page
             {
                 
                 ddlindex.DataTextField = "indexname";
-                ddlindex.DataValueField = "indexname";
+                ddlindex.DataValueField = "indexid";
                 ddlindex.DataSource = dt;
                 ddlindex.DataBind();
                 ddlindex.Items.Insert(0, new ListItem("--Select--", "0"));
@@ -122,6 +149,87 @@ public partial class TradeAnalyser : System.Web.UI.Page
             {
                 ddlindex.DataBind();
                 ddlindex.Items.Insert(0, new ListItem("--Select--", "0"));
+            }
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
+
+    public void getdirection()
+    {
+        try
+        {
+            DataTable dt = new DataTable();
+            string sql = "select directionid,directionname from TradingLogger.dbo.direction";
+            //string connectionString = @"Server=(LocalDB)\MSSQLLocalDB;Database=TradingLogger;User Id=TradeLoggerAdmin;Password=Admin@555;Integrated Security=True;";
+            string connectionString = Convert.ToString(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            conn.Close();
+            if (dt != null && dt.Rows.Count > 0)
+            {
+
+                ddldirection.DataTextField = "directionname";
+                ddldirection.DataValueField = "directionid";
+                ddldirection.DataSource = dt;
+                ddldirection.DataBind();
+                ddldirection.Items.Insert(0, new ListItem("--Select--", "0"));
+            }
+            else
+            {
+                ddldirection.DataBind();
+                ddldirection.Items.Insert(0, new ListItem("--Select--", "0"));
+            }
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
+
+    public void getsetup()
+    {
+        try
+        {
+            int directionid = int.Parse(ddldirection.SelectedValue);
+            string sql = "";
+            DataTable dt = new DataTable();
+            if (directionid == 1 || directionid == 2)
+            {
+                sql = "select top 1 setupid,setupname from TradingLogger.dbo.setup where setupid = 1";
+            }
+            else if (directionid == 3 || directionid == 4)
+            {
+                sql = "select top 1 setupid,setupname from TradingLogger.dbo.setup where setupid = 2";
+            }
+            //string connectionString = @"Server=(LocalDB)\MSSQLLocalDB;Database=TradingLogger;User Id=TradeLoggerAdmin;Password=Admin@555;Integrated Security=True;";
+            string connectionString = Convert.ToString(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            conn.Close();
+            if (dt != null && dt.Rows.Count > 0)
+            {
+
+                ddlsetup.DataTextField = "setupname";
+                ddlsetup.DataValueField = "setupid";
+                ddlsetup.DataSource = dt;
+                ddlsetup.DataBind();
+                ddlsetup.Items.Insert(0, new ListItem("--Select--", "0"));
+            }
+            else
+            {
+                ddlsetup.DataBind();
+                ddlsetup.Items.Insert(0, new ListItem("--Select--", "0"));
             }
         }
         catch (Exception ex)
