@@ -15,11 +15,15 @@ public partial class TradeAnalyser : System.Web.UI.Page
     {
         divtxtstockname.Visible = false;
         divddlindex.Visible = false;
+        divqty.Visible = false;
+        divlots.Visible = false;
         txtsetup.ReadOnly = true;
+        txtindicator.ReadOnly = true;
         if (!IsPostBack)
         {
             getModelDetails();
-            int modelid = int.Parse(ddlmodel.SelectedValue);
+            //Fieldshow();
+            /*int modelid = int.Parse(ddlmodel.SelectedValue);
             if (modelid == 1)
             {
                 Fieldshow();
@@ -27,12 +31,19 @@ public partial class TradeAnalyser : System.Web.UI.Page
             else if (modelid == 2)
             {
                 Fieldshow();
-            }
+            }*/
+
+            Fieldshow();
             getdirection();
+            int directionid = int.Parse(ddldirection.SelectedValue);
+            int setupid = (directionid > 0) && (directionid == 1) || (directionid == 2) ? 1 : (directionid > 0) && (directionid == 3) || (directionid == 4) ? 2 : 3;
+            gettradesetup(directionid,setupid);
             ddlindex.Items.Clear();
             ddlindex.DataBind();
             ddlindex.Items.Insert(0, new ListItem("--Select--", "0"));
-           
+            ddltradesetup.Items.Clear();
+            ddltradesetup.DataBind();
+            ddltradesetup.Items.Insert(0, new ListItem("--Select--", "0"));         
         }
     }
 
@@ -45,9 +56,14 @@ public partial class TradeAnalyser : System.Web.UI.Page
             int modelId = int.Parse(ddlmodel.SelectedValue);
             if (modelId > 0)
             {
-                Fieldshow();
+                if (modelId == 1)
+                {
+                    divtxtstockname.Visible = true;
+                }
+                
                 if (modelId == 2)
                 {
+                    divddlindex.Visible = true;
                     ddlindex.Focus();
                     getindexDetails();
                 }
@@ -71,9 +87,32 @@ public partial class TradeAnalyser : System.Web.UI.Page
         try
         {
             int directionid = int.Parse(ddldirection.SelectedValue);
+            int setupid = (directionid > 0) && (directionid == 1) || (directionid == 2) ? 1 : (directionid > 0) && (directionid == 3) || (directionid == 4) ? 2 : 3;
             if (directionid > 0)
             {
                 getsetup();
+                gettradesetup(directionid, setupid);
+            }
+            else
+            {
+                //Error
+            }
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
+
+    protected void ddlSelectedtradesetup(object sender, EventArgs e)
+    {
+        try
+        {
+            int tradesetupid = int.Parse(ddltradesetup.SelectedValue);
+            if (tradesetupid > 0)
+            {
+                getindicator(tradesetupid);
             }
             else
             {
@@ -135,7 +174,6 @@ public partial class TradeAnalyser : System.Web.UI.Page
         {
             DataTable dt = new DataTable();
             string sql = "select indexid,indexname from TradingLogger.dbo.indexname";
-            //string connectionString = @"Server=(LocalDB)\MSSQLLocalDB;Database=TradingLogger;User Id=TradeLoggerAdmin;Password=Admin@555;Integrated Security=True;";
             string connectionString = Convert.ToString(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
@@ -171,7 +209,6 @@ public partial class TradeAnalyser : System.Web.UI.Page
         {
             DataTable dt = new DataTable();
             string sql = "select directionid,directionname from TradingLogger.dbo.direction";
-            //string connectionString = @"Server=(LocalDB)\MSSQLLocalDB;Database=TradingLogger;User Id=TradeLoggerAdmin;Password=Admin@555;Integrated Security=True;";
             string connectionString = Convert.ToString(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
@@ -216,7 +253,10 @@ public partial class TradeAnalyser : System.Web.UI.Page
             {
                 sql = "select top 1 setupid,setupname from TradingLogger.dbo.setup where setupid = 2";
             }
-            //string connectionString = @"Server=(LocalDB)\MSSQLLocalDB;Database=TradingLogger;User Id=TradeLoggerAdmin;Password=Admin@555;Integrated Security=True;";
+            else if (directionid == 5 || directionid == 6)
+            {
+                sql = "select top 1 setupid,setupname from TradingLogger.dbo.setup where setupid = 3";
+            }
             string connectionString = Convert.ToString(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
@@ -239,6 +279,72 @@ public partial class TradeAnalyser : System.Web.UI.Page
         }
     }
 
+    public void gettradesetup(int directionid, int setupid)
+    {
+        try
+        {
+            string sql = "";
+            DataTable dt = new DataTable();
+            sql = "select tradesetupid,tradesetupname from TradingLogger.dbo.tradesetup where setupid = " + setupid + " and directionid =" + directionid;
+            string connectionString = Convert.ToString(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            conn.Close();
+            if (dt != null && dt.Rows.Count > 0)
+            {
+
+                ddltradesetup.DataTextField = "tradesetupname";
+                ddltradesetup.DataValueField = "tradesetupid";
+                ddltradesetup.DataSource = dt;
+                ddltradesetup.DataBind();
+                ddltradesetup.Items.Insert(0, new ListItem("--Select--", "0"));
+            }
+            else
+            {
+                ddltradesetup.DataBind();
+                ddltradesetup.Items.Insert(0, new ListItem("--Select--", "0"));
+            }
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
+
+    public void getindicator(int tradesetupid)
+    {
+        try
+        {
+            string sql = "";
+            DataTable dt = new DataTable();
+            sql = "select Indicatorid,Indicatorname from TradingLogger.dbo.Indicator where tradesetupid = " + tradesetupid;
+            string connectionString = Convert.ToString(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            SqlDataReader rdr = cmd.ExecuteReader();
+            if (rdr.HasRows)
+            {
+                rdr.Read();
+                string indicator = rdr["Indicatorname"].ToString();
+                txtindicator.Text = indicator;
+            }
+            conn.Close();
+
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
+
     public void Fieldshow()
     {
         try
@@ -249,12 +355,14 @@ public partial class TradeAnalyser : System.Web.UI.Page
                 if (modelid == 1)
                 {
                     divtxtstockname.Visible = true;
-                    divddlindex.Visible = false;
+                    divqty.Visible = true;
+                    //divddlindex.Visible = false;
                 }
                 else if (modelid == 2)
                 {
-                    divtxtstockname.Visible = false;
+                    //divtxtstockname.Visible = false;
                     divddlindex.Visible = true;
+                    divlots.Visible = true;
                 }
             }
         }
