@@ -6,9 +6,9 @@
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
     <script type="text/javascript" src="Select/select2.js"></script>
     <link rel="stylesheet" type="text/css" href="Select/select2.css"/>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.19.custom.css" rel="stylesheet" />
+    <script type="text/javascript" src="Scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="Scripts/jquery-ui-1.8.20.min.js"></script> 
 
 
      <script type="text/javascript">
@@ -18,6 +18,31 @@
                  changeYear: true
              });
          });
+
+
+        /* $('.datepicker').datetimepicker({
+
+             format: 'Y/m/d H:i',
+             formatTime: 'H:i',
+             formatDate: 'Y/m/d',
+
+             // new Date(), '1986/12/08', '-1970/01/05','-1970/01/05',
+             startDate:  false, 
+
+             step: 60,
+             monthChangeSpinner: true,
+
+             closeOnDateSelect: false,
+             closeOnTimeSelect: true,
+             closeOnWithoutClick: true,
+             closeOnInputClick: true,
+             openOnFocus: true,
+
+             timepicker: true,
+             datepicker: true,
+  
+         });*/
+
     </script>
     <style>
         .form4_col { width: 18.5% !important; }
@@ -44,7 +69,7 @@
         border: 1px solid #3AC0F2;
     }
     </style>
-    <div class="container">
+    <div class="container" runat="server">
         <h1>Trade Analysis</h1>
         <div>
             <asp:Label runat="server" ID="lblErrorDisplay" ForeColor="Red" FontBold="true" Visible="false" Font-Size="Medium" ></asp:Label>
@@ -102,7 +127,7 @@
 
             <div id="Div9" class="form4_col" runat="server">
                 <asp:Label ID="lblindicator" runat="server" >Indicator</asp:Label>
-                <asp:TextBox ID="txtindicator" runat="server" autocomplete="off" TextMode="MultiLine"></asp:TextBox>
+                <asp:TextBox ID="txtindicator" runat="server" autocomplete="off" Wrap="true"></asp:TextBox>
             </div>
 
             <div id="divqty" class="form4_col" runat="server">
@@ -122,7 +147,7 @@
 
             <div id="Diventrydate" class ="form4_col">
              <asp:Label   ID="lblentrydate" runat="server" CssClass="star">Entry Date</asp:Label>
-             <asp:TextBox ID="datepicker" runat="server" CssClass="datepicker" ></asp:TextBox>                                   
+             <asp:TextBox ID="txtentrydatepicker" runat="server" CssClass="datepicker" ></asp:TextBox>                                   
             </div>
 
             <div id="Div13" class="form4_col" runat="server">
@@ -131,11 +156,38 @@
             </div>
 
             <div id="Div14" class="form4_col" runat="server">
-                <asp:Label ID="Label1" runat="server" >Stop Loss</asp:Label>
+                <asp:Label ID="Label1" runat="server" >Exit price</asp:Label>
                 <asp:TextBox ID="TextBox1" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" autocomplete="off"></asp:TextBox>
             </div>
+            
+            <div class="searchdiv" id="submitdiv" runat="server" style="text-align: center;width: 100%;">
+                <asp:Button ID="Button1" runat="server" style="width:100px;" CssClass="formbtn searchbtn-common fa fa-paper-plane"  Text="&#xf1d8; Submit" OnClick="finalSubmit" OnClientClick="this.disabled='true';"  UseSubmitBehavior="false" />
+                <asp:Button ID="Button2" runat="server" CausesValidation="false" style="width:100px;" CssClass="formbtn resetbtn-common fa fa-refresh" Text="&#xf021; Reset" OnClick="resetAll" />
+            </div>
         </div>
+
+        
+
+
+
+      <div class="griddiv" runat="server">
+           <asp:GridView ID="gvRequestDetails" runat="server" CellPadding="4" AllowPaging="true" PageSize="10" emptydatatext="No Records Found !" ShowHeaderWhenEmpty="True" 
+                AutoGenerateColumns="False" OnPageIndexChanging="PageIndexChanging" >
+                <Columns>
+                    <asp:BoundField HeaderText="Query Type" DataField="query_type_id" />
+                    <asp:BoundField HeaderText="Server Type" DataField="system_name" />
+                    <asp:BoundField HeaderText="Created By" DataField="created_by" />
+                    <asp:BoundField HeaderText="Creation Date" DataField="created_on" />
+                </Columns>
+                <HeaderStyle BackColor="#5f6970" Font-Bold="True" ForeColor="white" />
+            </asp:GridView>
+        </div>
+
+
+            
         </form>
+
+
 
     </div>
 </asp:Content>

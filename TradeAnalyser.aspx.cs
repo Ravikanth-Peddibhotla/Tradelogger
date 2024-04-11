@@ -126,6 +126,33 @@ public partial class TradeAnalyser : System.Web.UI.Page
         }
     }
 
+    protected void resetAll(object sender, EventArgs e)
+    {
+        try
+        {
+            int modelId = int.Parse(ddlmodel.SelectedValue);
+            Response.Redirect("TradeAnalyser.aspx?modelId=" + modelId, false);
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom3 = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
+
+
+    protected void finalSubmit(object sender, EventArgs e)
+    {
+        try
+        {
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+    }
 
 
 
@@ -370,6 +397,11 @@ public partial class TradeAnalyser : System.Web.UI.Page
         {
             throw ex;
         }
+    }
+
+    protected void PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        gvRequestDetails.PageIndex = e.NewPageIndex;
     }
 
     #endregion method
