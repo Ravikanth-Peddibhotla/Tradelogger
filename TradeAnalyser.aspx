@@ -155,9 +155,24 @@
                 <asp:TextBox ID="txtsl" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" autocomplete="off"></asp:TextBox>
             </div>
 
+            <div id="Div3" class="form4_col" runat="server">
+                <asp:Label ID="lbltarget" runat="server" >Target</asp:Label>
+                <asp:TextBox ID="txttarget" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" autocomplete="off"></asp:TextBox>
+            </div>
+
+           <div id="Div10" class="form4_col" runat="server">
+                <asp:Label ID="lblrrr" runat="server" >RRR</asp:Label>
+                <asp:TextBox ID="txtrrr" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" autocomplete="off"></asp:TextBox>
+            </div>
+
             <div id="Div14" class="form4_col" runat="server">
-                <asp:Label ID="Label1" runat="server" >Exit price</asp:Label>
-                <asp:TextBox ID="TextBox1" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" autocomplete="off"></asp:TextBox>
+                <asp:Label ID="lblexit" runat="server" >Exit price</asp:Label>
+                <asp:TextBox ID="txtexit" runat="server" CssClass="selectClass"  Display="Dynamic" AutoPostBack="True" autocomplete="off"></asp:TextBox>
+            </div>
+
+            <div id="Div11" class ="form4_col">
+             <asp:Label   ID="lblexitdate" runat="server" CssClass="star">Exit Date</asp:Label>
+             <asp:TextBox ID="txtexitdate" runat="server" CssClass="datepicker" ></asp:TextBox>                                   
             </div>
             
             <div class="searchdiv" id="submitdiv" runat="server" style="text-align: center;width: 100%;">
@@ -166,28 +181,23 @@
             </div>
         </div>
 
-        
-
-
 
       <div class="griddiv" runat="server">
            <asp:GridView ID="gvRequestDetails" runat="server" CellPadding="4" AllowPaging="true" PageSize="10" emptydatatext="No Records Found !" ShowHeaderWhenEmpty="True" 
                 AutoGenerateColumns="False" OnPageIndexChanging="PageIndexChanging" >
                 <Columns>
-                    <asp:BoundField HeaderText="Query Type" DataField="query_type_id" />
-                    <asp:BoundField HeaderText="Server Type" DataField="system_name" />
-                    <asp:BoundField HeaderText="Created By" DataField="created_by" />
-                    <asp:BoundField HeaderText="Creation Date" DataField="created_on" />
+                    <asp:BoundField HeaderText="stock name" DataField="stockname" />
+                    <asp:BoundField HeaderText="Entry" DataField="Entryprice" />
+                    <asp:BoundField HeaderText="Stoploss" DataField="Stoploss" />
+                    <asp:BoundField HeaderText="targetprice" DataField="targetprice" />
+                    <asp:BoundField HeaderText="exitprice" DataField="exitprice" />
+                    <asp:BoundField HeaderText="exitprice" DataField="exitprice" />
+                    <asp:BoundField HeaderText="Created Date" DataField="createddate" />
                 </Columns>
                 <HeaderStyle BackColor="#5f6970" Font-Bold="True" ForeColor="white" />
             </asp:GridView>
-        </div>
-
-
-            
-        </form>
-
-
+        </div>           
+   </form>
 
     </div>
 </asp:Content>

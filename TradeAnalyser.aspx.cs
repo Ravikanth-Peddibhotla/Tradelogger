@@ -43,7 +43,8 @@ public partial class TradeAnalyser : System.Web.UI.Page
             ddlindex.Items.Insert(0, new ListItem("--Select--", "0"));
             ddltradesetup.Items.Clear();
             ddltradesetup.DataBind();
-            ddltradesetup.Items.Insert(0, new ListItem("--Select--", "0"));         
+            ddltradesetup.Items.Insert(0, new ListItem("--Select--", "0"));
+            getAnalyserLogListing("", "", 0, 0, 0, 0);
         }
     }
 
@@ -145,7 +146,15 @@ public partial class TradeAnalyser : System.Web.UI.Page
     {
         try
         {
-
+            string stockname = txtstockname.Text.ToString();
+            string tradetype = ddltot.SelectedItem.ToString();
+            int Entryprice = int.Parse(txtentry.Text.ToString());
+            int Stoploss = int.Parse(txtsl.Text.ToString());
+            int target = int.Parse(txttarget.Text.ToString());
+            int Exitprice = int.Parse(txtexit.Text.ToString());
+            TradeAnalyserLog(stockname,tradetype,Entryprice,Stoploss,target,Exitprice);
+            getAnalyserLogListing(stockname, tradetype, Entryprice, Stoploss, target, Exitprice);
+            Response.Redirect("TradeAnalyser.aspx?successMessage=Log Inserted Successfully", false);
         }
         catch (Exception ex)
         {
@@ -402,7 +411,66 @@ public partial class TradeAnalyser : System.Web.UI.Page
     protected void PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         gvRequestDetails.PageIndex = e.NewPageIndex;
+        string stockname = txtstockname.Text.ToString();
+        string tradetype = ddltot.SelectedItem.ToString();
+        int Entryprice = int.Parse(txtentry.Text.ToString());
+        int Stoploss = int.Parse(txtsl.Text.ToString());
+        int target = int.Parse(txttarget.Text.ToString());
+        int Exitprice = int.Parse(txtexit.Text.ToString());
+        getAnalyserLogListing(stockname,tradetype,Entryprice,Stoploss,target,Exitprice);
     }
 
     #endregion method
+
+
+    #region logs
+
+    public void TradeAnalyserLog(string stockname, string tradetype, int Entryprice, int Stoploss, int target, int Exitprice)
+    {
+        try
+        {
+            string currentDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string sql = "insert into TradingLogger.dbo.analyserlog(stockname,tradetype,Entryprice,Stoploss,target,exitprice,createddate) values " +
+                "('" + stockname + "','" + tradetype + "'," + Entryprice + "," + Stoploss + "," + target + "," + Exitprice + ",'" + currentDate + "') returning logid";
+            int primaryKey;
+            string connectionString = Convert.ToString(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            primaryKey = Convert.ToInt32(cmd.ExecuteScalar());
+            conn.Close();
+            //requestFieldLog(dtFieldData, primaryKey);
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
+
+    public void getAnalyserLogListing(string stockname, string tradetype, int Entryprice, int Stoploss, int target, int Exitprice)
+    {
+        DataTable dt = new DataTable();
+        try
+        {
+            string sql = "select stockname,tradetype,Entryprice,Stoploss,targetprice,exitprice from TradingLogger.dbo.analyserlog order by createddate desc";
+            string connectionString = Convert.ToString(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            conn.Close();
+            gvRequestDetails.DataSource = dt;
+            gvRequestDetails.DataBind();
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
+
+
+    #endregion logs
 }
