@@ -19,36 +19,48 @@ public partial class TradeAnalyser : System.Web.UI.Page
         divlots.Visible = false;
         txtsetup.ReadOnly = true;
         txtindicator.ReadOnly = true;
+        divaction.Visible = false;
         if (!IsPostBack)
         {
             getModelDetails();
-            //Fieldshow();
-            /*int modelid = int.Parse(ddlmodel.SelectedValue);
-            if (modelid == 1)
-            {
-                Fieldshow();
-            }
-            else if (modelid == 2)
-            {
-                Fieldshow();
-            }*/
-
-            Fieldshow();
+            
             getdirection();
+            gettypeoftrade();
             int directionid = int.Parse(ddldirection.SelectedValue);
+            int typeoftradeid = int.Parse(ddltot.SelectedValue);
             int setupid = (directionid > 0) && (directionid == 1) || (directionid == 2) ? 1 : (directionid > 0) && (directionid == 3) || (directionid == 4) ? 2 : 3;
             gettradesetup(directionid,setupid);
+            getaction(typeoftradeid);
+            Fieldshow();
             ddlindex.Items.Clear();
             ddlindex.DataBind();
             ddlindex.Items.Insert(0, new ListItem("--Select--", "0"));
             ddltradesetup.Items.Clear();
             ddltradesetup.DataBind();
-            ddltradesetup.Items.Insert(0, new ListItem("--Select--", "0"));
+            //ddltradesetup.Items.Insert(0, new ListItem("--Select--", "-1"));
+            ddlaction.Items.Clear();
+            ddlaction.DataBind();
+            ddlaction.Items.Insert(0, new ListItem("--Select--", "0"));
             getAnalyserLogListing("", "", 0, 0, 0, 0);
         }
     }
 
     #region Event
+
+
+    protected void ddlactionbuysell(object sender, EventArgs e)
+    {
+        try
+        {
+            int typeoftradeid = int.Parse(ddltot.SelectedValue);
+            getaction(typeoftradeid);
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
 
     protected void ddlSelectedModel(object sender, EventArgs e)
     {
@@ -381,6 +393,86 @@ public partial class TradeAnalyser : System.Web.UI.Page
         }
     }
 
+    public void gettypeoftrade()
+    {
+        try
+        {
+            string sql = "";
+            DataTable dt = new DataTable();
+            sql = "select totid,totname from TradingLogger.dbo.typeoftrade";
+            string connectionString = Convert.ToString(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            conn.Close();
+            if (dt != null && dt.Rows.Count > 0)
+            {
+
+                ddltot.DataTextField = "totname";
+                ddltot.DataValueField = "totid";
+                ddltot.DataSource = dt;
+                ddltot.DataBind();
+                ddltot.Items.Insert(0, new ListItem("--Select--", "1"));
+            }
+            else
+            {
+                ddltot.DataBind();
+                ddltot.Items.Insert(0, new ListItem("--Select--", "1"));
+            }
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
+
+    public void getaction(int typeoftradeid)
+    {
+        try
+        {
+            string sql = "";
+            DataTable dt = new DataTable();
+            if ((typeoftradeid == 1) || (typeoftradeid == 2)) 
+            {
+                sql = "select distinct a.actionid,a.actionname from TradingLogger.dbo.action a,TradingLogger.dbo.typeoftrade t where a.action=1";
+            }
+            else if ((typeoftradeid == 3) || (typeoftradeid == 4))
+            {
+                sql = "select distinct a.actionid,a.actionname from TradingLogger.dbo.action a,TradingLogger.dbo.typeoftrade t where a.action=0";
+            } 
+            string connectionString = Convert.ToString(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            conn.Close();
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                ddlaction.DataTextField = "actionname";
+                ddlaction.DataValueField = "actionid";
+                ddlaction.DataSource = dt;
+                ddlaction.DataBind();
+                ddlaction.Items.Insert(0, new ListItem("--Select--", "0"));
+            }
+            else
+            {
+                ddlaction.DataBind();
+                ddlaction.Items.Insert(0, new ListItem("--Select--", "0"));
+            }
+
+        }
+        catch (Exception ex)
+        {
+            //CustomException _expCustom = new CustomException(ex.Message, CustomException.WhoCallsMe(), ExceptionSeverityLevel.Critical, ex, true);
+            throw ex;
+        }
+    }
+
     public void Fieldshow()
     {
         try
@@ -392,6 +484,7 @@ public partial class TradeAnalyser : System.Web.UI.Page
                 {
                     divtxtstockname.Visible = true;
                     divqty.Visible = true;
+                    divaction.Visible = true;
                     //divddlindex.Visible = false;
                 }
                 else if (modelid == 2)
@@ -419,6 +512,8 @@ public partial class TradeAnalyser : System.Web.UI.Page
         int Exitprice = int.Parse(txtexit.Text.ToString());
         getAnalyserLogListing(stockname,tradetype,Entryprice,Stoploss,target,Exitprice);
     }
+
+
 
     #endregion method
 
